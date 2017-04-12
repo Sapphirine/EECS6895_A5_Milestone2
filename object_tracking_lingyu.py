@@ -2,6 +2,7 @@ import dlib
 import cv2
 import argparse as ap
 import get_points
+import motionkalm
 
 def run(source=0, dispLoc=False):
     # Create the VideoCapture object
@@ -54,6 +55,36 @@ def run(source=0, dispLoc=False):
             # Get the position of th object, draw a 
             # bounding box around it and display it.
             rect = tracker[i].get_position()
+
+            # For estimate the occlusion and exiting of the object.
+            radio = tracker[i].update(img, rect)
+            #print radio
+            pt1 = (int(rect.left()), int(rect.top()))
+            pt2 = (int(rect.right()), int(rect.bottom()))
+            
+            if radio > best_radio:
+                best_radio = radio
+                print "New highest match!"
+            
+            else:
+                if radio < 0.2*best_radio:
+                   #print "Object is exiting or being occluded"
+                   # pt1 = (int(rect.left()), int(rect.top()))
+                   # pt2 = (int(rect.right()), int(rect.bottom()))
+        
+                   # kf = kf.em(measurements, n_iter=5)
+                   # (filtered_state_means, filtered_state_covariances) = kf.filter(measurements)
+                   kalmanfilter = motionkalm()
+
+                   Px, Py = kalmanfilter.ComputeMotion(x,y)
+
+                   
+                   print "Object is exiting or being occluded, the next prediction position 1s later is:"
+                   print Px
+    
+                   break
+                   exit()
+
             pt1 = (int(rect.left()), int(rect.top()))
             pt2 = (int(rect.right()), int(rect.bottom()))
             cv2.rectangle(img, pt1, pt2, (255, 255, 255), 3)
