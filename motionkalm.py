@@ -26,9 +26,6 @@ class motionkalm(object):
         self.esitmated = None
 
     def update(self, x, y):
-        '''
-        Updates the filter with a new X,Y measurement
-        '''
 
         self.kalman_measurement[0, 0] = x
         self.kalman_measurement[1, 0] = y
@@ -37,16 +34,10 @@ class motionkalm(object):
         # self.corrected = cv.KalmanCorrect(self.kalman, self.kalman_measurement)
 
     def getEstimate(self):
-        '''
-        Returns the current X,Y estimate.
-        '''
-
+        
         return self.corrected[0,0], self.corrected[1,0]
 
     def getPrediction(self):
-        '''
-        Returns the current X,Y prediction.
-        '''
         self.predicted = cv.KalmanPredict(self.kalman)
         
 
