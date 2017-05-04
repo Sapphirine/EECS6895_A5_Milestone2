@@ -5,7 +5,7 @@ import motionkalm
 
 
 
-def Initialization(box)
+def Initialization(box):
 
 ## Get the initialized bounding box for the selected target
 
@@ -54,7 +54,7 @@ def Initialization(box)
 	return zip(p_right_list, p_left_list)
 
 
-def VideoRead(videopath)
+def VideoRead(videopath):
 
 	cam = cv2.VideoCapture(videopath)
 
@@ -87,7 +87,7 @@ def VideoRead(videopath)
 
     
 
-def Tracking(videopath)
+def Tracking(videopath):
 
 
 	obj = VideoRead(videopath)
@@ -120,12 +120,7 @@ def Tracking(videopath)
             
 			else:
 				if radio < 0.2*best_radio:
-                   #print "Object is exiting or being occluded"
-                   # pt1 = (int(rect.left()), int(rect.top()))
-                   # pt2 = (int(rect.right()), int(rect.bottom()))
-        
-                   # kf = kf.em(measurements, n_iter=5)
-                   # (filtered_state_means, filtered_state_covariances) = kf.filter(measurements)
+
 					kalmanfilter = motionkalm()
 
 					Px, Py = kalmanfilter.ComputeMotion(x,y)
