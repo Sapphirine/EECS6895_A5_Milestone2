@@ -9,17 +9,17 @@ def Initialization(box)
 
 ## Get the initialized bounding box for the selected target
 
-    p_left_list = []
-    p_right_list = []
+	p_left_list = []
+	p_right_list = []
 
-    box_list = []
-    box_target = box.copy()
+	box_list = []
+	box_target = box.copy()
 	mousebutton = False
 
 	ix,iy = -1,-1
 
 	cv2.namedWindow("box_target", cv2.WINDOW_NORMAL)
-    cv2.imshow("box_target", box_target)
+	cv2.imshow("box_target", box_target)
 # Creating mouse callback function
 	def draw_rect(event, x, y, flags, param):
 		
